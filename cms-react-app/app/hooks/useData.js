@@ -1,4 +1,6 @@
-export function Data() {
+import md5 from 'md5'
+
+export function staticData() {
 	return [
 		{
 			"id": 100213,
@@ -506,4 +508,73 @@ export function Data() {
 			"thumbnail": "http://i.annihil.us/u/prod/marvel/i/mg/c/c0/6287bd87eafb1.jpg"
 		}
 	]
+}
+
+const TIMESTAMP = Date.now();
+
+const marvelObj = {
+	url: "https://gateway.marvel.com",
+	path: "/v1/public/comics",
+	params: [
+		`ts=${TIMESTAMP}`,
+		"format=comic",
+		"formatType=comic",
+		"dateRange=1900-01-01%2C2024-01-01",
+		"noVariants=true",
+		"limit=20",
+		"apikey=" + "d1bcb79a6ab735b5aeff74c1c1c1a82a",
+		"hash=" + md5(TIMESTAMP + "60906353c898fea2c65fc49c76eb4f80bdfc437b" + "d1bcb79a6ab735b5aeff74c1c1c1a82a")
+	]
+}
+
+const buildRequest = ({url, path, params}) => {
+	return params ? url + path + '?' + params.join('&') : url + path;
+}
+
+// Comic.propTypes = {
+// 	comic: PropTypes.shape({
+// 		id: PropTypes.number.isRequired,
+// 		title: PropTypes.string.isRequired,
+// 		issueNumber: PropTypes.number.isRequired,
+// 		publishDate: PropTypes.instanceOf(Date).isRequired,
+// 		creators: PropTypes.shape({
+// 			resourceURI: PropTypes.string,
+// 			name: PropTypes.string.isRequired,
+// 			role: PropTypes.string.isRequired,
+// 		}),
+// 		thumbnail: PropTypes.string.isRequired
+// 	})
+// }
+
+const parseComics = (comics) => {
+	return comics.map((comic => {
+		var publishDate = new Date(comic.dates[0].date);
+		publishDate = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+		return {
+		 	id: comic.id,
+		 	title: comic.title,
+		 	issueNumber: comic.issueNumber,
+		 	publishDate: publishDate,
+		 	creators: comic.creators.items,
+		 	thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
+		}
+	}))
+} 
+
+export const fetchComics = async (setApiStatus, setComics) => {
+	setApiStatus("loading");
+	try {
+		const res = await fetch(buildRequest(marvelObj));
+		const data = await res.json();
+		const results = data.data.results;
+
+		if (data.code !== 200) throw new Error();
+
+		setApiStatus("success")
+		setComics(parseComics(results));
+	} catch(e) {
+		setApiStatus("error");
+		console.error(e);
+	}
 }

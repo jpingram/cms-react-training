@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react"
 import { Comic } from "./Comic"
-import { Data } from "../Data"
+import { fetchComics } from "../hooks/useData"
 
 export function ComicsList() {
 	const [comics, setComics] = useState([]);
-
-	const getComics = () => {
-		setComics(Data());
-	}
+	const [apiStatus, setApiStatus] = useState(false);
 
 	useEffect(() => {
-		getComics();
+		fetchComics(setApiStatus, setComics);
 	}, [])
-
 
 	return (
 		<div className='grid'>
-			{comics
+			{apiStatus === 'loading' && 
+				<h3>Loading comics!</h3>
+			}
+			{apiStatus === 'success' && comics
 			.map((comic) => (
 				<Comic key={comic.id} comic={comic} />
 			))}
+			{apiStatus === 'error' &&
+				<div>
+					<h3>Sorry, there was an error processing your request.</h3>
+					<h4>Please try again.</h4>
+				</div>
+			}
 		</div>
 	)
 }
