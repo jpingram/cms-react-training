@@ -3,8 +3,13 @@ import { useState } from "react"
 import Image from 'next/image'
 import { Detail } from './Detail'
 import { Button } from './Button'
+import { Comic } from '../hooks/useData'
 
-export function Comic({ comic }) {
+type CardProps = {
+	comic: Comic
+}
+
+export function ComicCard({ comic }: CardProps) {
 	const [favorited, setFavorited] = useState(false);
 
 	return (

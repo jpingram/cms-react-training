@@ -1,5 +1,31 @@
 import md5 from 'md5'
 
+export type Status = 'waiting' | 'loading' | 'success' | 'error';
+
+export type Comic = {
+	id: string,
+	title: string,
+	issueNumber: number,
+	publishDate: string,
+	creators: {
+		resourceURI?: string,
+		name: string,
+		role: string,
+	}[],
+	thumbnail: string,
+}
+
+type RequestProps = {
+	url: string,
+	path: string,
+	params: string[],
+}
+
+type FetchProps = {
+	setApiStatus: (status: Status) => void,
+	setComics: (comics: Comic[]) => void,
+}
+
 export function staticData() {
 	return [
 		{
@@ -527,42 +553,27 @@ const marvelObj = {
 	]
 }
 
-const buildRequest = ({url, path, params}) => {
+const buildRequest = ({url, path, params}: RequestProps) => {
 	return params ? url + path + '?' + params.join('&') : url + path;
 }
 
-// Comic.propTypes = {
-// 	comic: PropTypes.shape({
-// 		id: PropTypes.number.isRequired,
-// 		title: PropTypes.string.isRequired,
-// 		issueNumber: PropTypes.number.isRequired,
-// 		publishDate: PropTypes.instanceOf(Date).isRequired,
-// 		creators: PropTypes.shape({
-// 			resourceURI: PropTypes.string,
-// 			name: PropTypes.string.isRequired,
-// 			role: PropTypes.string.isRequired,
-// 		}),
-// 		thumbnail: PropTypes.string.isRequired
-// 	})
-// }
-
-const parseComics = (comics) => {
+const parseComics = (comics: any[]): Comic[] => {
 	return comics.map((comic => {
-		var publishDate = new Date(comic.dates[0].date);
-		publishDate = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+		var dateObj = new Date(comic.dates[0].date);
+		var dateString = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
 		return {
 		 	id: comic.id,
 		 	title: comic.title,
 		 	issueNumber: comic.issueNumber,
-		 	publishDate: publishDate,
+		 	publishDate: dateString,
 		 	creators: comic.creators.items,
 		 	thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
 		}
 	}))
 } 
 
-export const fetchComics = async (setApiStatus, setComics) => {
+export const fetchComics = async ({setApiStatus, setComics}: FetchProps) => {
 	setApiStatus("loading");
 	try {
 		const res = await fetch(buildRequest(marvelObj));

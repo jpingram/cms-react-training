@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { Comic } from "./Comic"
-import { fetchComics } from "../hooks/useData"
+import { ComicCard } from "./ComicCard"
+import { Status, Comic, fetchComics } from "../hooks/useData"
 
 export function ComicsList() {
-	const [comics, setComics] = useState([]);
-	const [apiStatus, setApiStatus] = useState(false);
+	const [comics, setComics] = useState<Comic[]>([]);
+	const [apiStatus, setApiStatus] = useState<Status>('waiting');
 
 	useEffect(() => {
-		fetchComics(setApiStatus, setComics);
+		fetchComics({setApiStatus, setComics});
 	}, [])
 
 	return (
@@ -17,7 +17,7 @@ export function ComicsList() {
 			}
 			{apiStatus === 'success' && comics
 			.map((comic) => (
-				<Comic key={comic.id} comic={comic} />
+				<ComicCard key={comic.id} comic={comic} />
 			))}
 			{apiStatus === 'error' &&
 				<div>
