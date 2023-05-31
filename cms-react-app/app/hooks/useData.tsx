@@ -553,7 +553,7 @@ const marvelObj = {
 	]
 }
 
-const buildRequest = ({url, path, params}: RequestProps) => {
+const buildRequest = ({url, path, params}: RequestProps): string => {
 	return params ? url + path + '?' + params.join('&') : url + path;
 }
 
