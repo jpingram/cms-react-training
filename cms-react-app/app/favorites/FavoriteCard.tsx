@@ -7,8 +7,6 @@ type FavoriteProps = {
 }
 
 export const FavoriteCard = ({ comic, removeFromFavorites }: FavoriteProps) => {
-
-
 	return (
 		<div className='favoriteCard'>
 			<span className='leftCol'>

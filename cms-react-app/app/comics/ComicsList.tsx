@@ -1,41 +1,14 @@
-import React, { useState, useEffect } from "react"
 import { ComicCard } from "./ComicCard"
-import { Filter } from "../banner/Filter"
-import { Pager } from "./Pager"
-import { ITEM_LIMIT, Status, Comic, fetchComics } from "../hooks/useData"
+import { Status, Comic } from "../hooks/useData"
 
-export function ComicsList() {
-	const [comics, setComics] = useState<Comic[]>([]);
-	const [apiStatus, setApiStatus] = useState<Status>('waiting');
-	const [characterId, setCharacterId] = useState(0); //0 = none selected
-	const [creatorId, setCreatorId] = useState(0); //0 = none selected
+type ComicsListProps = {
+	comics: Comic[],
+	apiStatus: Status,
+}
 
-	const [offset, setOffset] = useState(0);
-	const [totalItems, setTotalItems] = useState(0);
-
-	const prevPage = () => {
-		if (offset > 0) {
-			if (offset < ITEM_LIMIT) {
-				setOffset(0);
-			} else {
-				setOffset(offset - ITEM_LIMIT);
-			}
-		}
-	}
-
-	const nextPage = () => {
-		if (offset + ITEM_LIMIT < totalItems) {
-			setOffset(offset + ITEM_LIMIT);
-		}
-	}
-
-	useEffect(() => {
-		fetchComics({setApiStatus, setComics, offset, setTotalItems, characterId, creatorId});
-	}, [offset, characterId, creatorId])
-
+export function ComicsList({ comics, apiStatus }: ComicsListProps) {
 	return (
 		<div className='comicsList'>
-			<Filter setCharacterId={setCharacterId} setCreatorId={setCreatorId} setOffset={setOffset}/>
 			<div className='grid'>
 				{apiStatus === 'loading' && 
 					<h3>Loading comics!</h3>
@@ -51,7 +24,6 @@ export function ComicsList() {
 					</div>
 				}
 			</div>
-			<Pager offset={offset} numItems={comics.length} totalItems={totalItems} prevPage={prevPage} nextPage={nextPage}/>
 		</div>
 		
 	)

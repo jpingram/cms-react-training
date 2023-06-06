@@ -2,7 +2,7 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-.main {
+.fullApp {
 	display: grid;
 	grid-template-columns: 1fr 400px;
 	grid-gap: 1.5rem;
