@@ -3,7 +3,7 @@ import md5 from 'md5'
 export type Status = 'waiting' | 'loading' | 'success' | 'error';
 
 export type Comic = {
-	id: string,
+	id: number,
 	title: string,
 	issueNumber: number,
 	publishDate: string,
@@ -19,11 +19,18 @@ type RequestProps = {
 	url: string,
 	path: string,
 	params: string[],
+	offset: number,
+	characterId?: number,
+	creatorId?: number,
 }
 
 type FetchProps = {
 	setApiStatus: (status: Status) => void,
 	setComics: (comics: Comic[]) => void,
+	setTotalItems: (total: number) => void,
+	offset: number,
+	characterId?: number,
+	creatorId?: number,
 }
 
 export function staticData() {
@@ -537,6 +544,7 @@ export function staticData() {
 }
 
 const TIMESTAMP = Date.now();
+export const ITEM_LIMIT = 15;
 
 const marvelObj = {
 	url: "https://gateway.marvel.com",
@@ -547,14 +555,19 @@ const marvelObj = {
 		"formatType=comic",
 		"dateRange=1900-01-01%2C2024-01-01",
 		"noVariants=true",
-		"limit=20",
+		`limit=${ITEM_LIMIT}`,
 		"apikey=" + "d1bcb79a6ab735b5aeff74c1c1c1a82a",
 		"hash=" + md5(TIMESTAMP + "60906353c898fea2c65fc49c76eb4f80bdfc437b" + "d1bcb79a6ab735b5aeff74c1c1c1a82a")
 	]
 }
 
-const buildRequest = ({url, path, params}: RequestProps): string => {
-	return params ? url + path + '?' + params.join('&') : url + path;
+const buildRequest = ({url, path, params, offset, characterId = 0, creatorId = 0}: RequestProps): string => {
+	//add character id and/or creator id to params, if applicable
+	const characterParam = characterId != 0 ? "&characters=" + characterId : "";
+	const creatorParam = creatorId != 0 ? "&creators=" + creatorId : "";
+
+	//return full API request string
+	return params ? url + path + '?' + params.join('&') + "&offset=" + offset + characterParam + creatorParam : url + path;
 }
 
 const parseComics = (comics: any[]): Comic[] => {
@@ -573,16 +586,17 @@ const parseComics = (comics: any[]): Comic[] => {
 	}))
 } 
 
-export const fetchComics = async ({setApiStatus, setComics}: FetchProps) => {
+export const fetchComics = async ({setApiStatus, setComics, setTotalItems, offset = 0, characterId = 0, creatorId = 0}: FetchProps) => {
 	setApiStatus("loading");
 	try {
-		const res = await fetch(buildRequest(marvelObj));
+		const res = await fetch(buildRequest({...marvelObj, offset, characterId, creatorId}));
 		const data = await res.json();
 		const results = data.data.results;
 
 		if (data.code !== 200) throw new Error();
 
 		setApiStatus("success")
+		setTotalItems(data.data.total);
 		setComics(parseComics(results));
 	} catch(e) {
 		setApiStatus("error");

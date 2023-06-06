@@ -2,8 +2,24 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-li {
+.main {
+	display: grid;
+	grid-template-columns: 1fr 400px;
+	grid-gap: 1.5rem;
+}
+
+ul {
+	padding: 0;
 	list-style-type: none;
+}
+
+li {
+	padding: 0;
+	list-style-type: none;
+}
+
+.comicsList {
+	min-width: 350px;
 }
 
 .grid {
@@ -14,11 +30,12 @@ li {
 	grid-gap: 0.75rem;
 }
 
-/* .comic {
+.comic {
 	position: relative;
 	display: block;
 	margin: 20px;
-} */
+	width: 275px;
+}
 
 .comic .title {
 	margin-top: 0;
@@ -30,6 +47,15 @@ li {
 	justify-content: center;
 	top: -25px;
 	left: -10px
+}
+
+.pager {
+	display: flex;
+	justify-content: center;
+}
+
+.favsList {
+	max-width: 400px;
 }
 
 .favButton {

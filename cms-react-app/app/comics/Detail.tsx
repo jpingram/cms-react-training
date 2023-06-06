@@ -10,15 +10,15 @@ type DetailProps = {
 
 export function Detail({ issue, publishDate, creators }: DetailProps) {
 	return (
-		<div>
-			<li><strong>Issue: </strong>{issue}</li>
-			<li><strong>Published: </strong>{publishDate}</li>
-			<li><strong>Creators: </strong>
+		<ul>
+			<li data-testid="issue"><strong>Issue: </strong>{issue}</li>
+			<li data-testid="publishDate"><strong>Published: </strong>{publishDate}</li>
+			<li data-testid="creators"><strong>Creators: </strong>
 				{creators
-					.filter((creator) => { return creator.role === 'writer' || creator.role === 'editor'})
-					.map((creator) => {return creator.name.split(' ')[1]})
+					//.filter((creator) => { return creator.role === 'writer' || creator.role === 'editor'})
+					.map((creator) => {return creator.name.split(' ').slice(-1)})
 					.join(', ')}
 			</li>
-		</div>
+		</ul>
 	);
 }
