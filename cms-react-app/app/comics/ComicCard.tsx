@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Detail } from './Detail'
 import { Button } from './Button'
 import { Comic } from '../hooks/useData'
+import styles from '../page.module.css'
 
 type CardProps = {
 	comic: Comic
@@ -13,7 +14,7 @@ export function ComicCard({ comic }: CardProps) {
 	const [favorited, setFavorited] = useState(false);
 
 	return (
-		<li className='comic'>
+		<li className={styles.comic}>
 			<Image
 				src={comic.thumbnail}
 				width={275}
@@ -21,7 +22,7 @@ export function ComicCard({ comic }: CardProps) {
 				alt={"Cover of " + comic.title}
 			/>
 			<Button favorited={favorited} setFavorited={setFavorited}/>
-			<h3 className="title">{comic.title}</h3>
+			<h3 className={styles.title}>{comic.title}</h3>
 			<Detail issue={comic.issueNumber} publishDate={comic.publishDate} creators={comic.creators}/>
 		</li>
 	)
