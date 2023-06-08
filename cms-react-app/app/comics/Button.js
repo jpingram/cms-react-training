@@ -8,7 +8,7 @@ export function Button({ favorited, setFavorited }) {
 	}
 
 	return (
-		<div className='buttonContainer'>
+		<div className={styles.buttonContainer}>
 			<button className={favorited === true ? styles.favButtonActive : styles.favButton} onClick={() => setFavorited(!favorited)}>
 				<BoltIcon />
 			</button>
