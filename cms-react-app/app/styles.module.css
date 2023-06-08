@@ -24,7 +24,7 @@
 	background: transparent linear-gradient(180deg, #000000B3 0%, #00000000 100%) 0% 0% no-repeat padding-box;
 }
 
-.headerNav.mobile {
+.headerNavMobile {
 	position: absolute;
 	display: flex;
 	flex-direction: row;
@@ -53,7 +53,7 @@
 	opacity: 1;
 }
 
-.headerTitleRect.mobile {
+.headerTitleRectMobile {
 	position: absolute;
 	top: 192px;
 	left: 50vw;
@@ -75,7 +75,7 @@
 	opacity: 1;
 }
 
-.headerTitle.mobile {
+.headerTitleMobile {
 	font: normal normal 900 27px/33px Montserrat;
 	letter-spacing: 0px;
 	color: #F8F8F2;
@@ -252,7 +252,7 @@ nav.desktop li a svg {
 	opacity: 1;
 }
 
-.banner.mobile {
+.bannerMobile {
 	position: relative;
 	display: flex;
 	justify-content: space-between;
@@ -267,7 +267,7 @@ nav.desktop li a svg {
 	opacity: 1;
 }
 
-.banner.mobile button{
+.bannerMobile button{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -379,6 +379,7 @@ nav.desktop li a svg {
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
+	margin: 20px;
 }
 
 .comicMobile .leftCol{
@@ -465,6 +466,7 @@ nav.desktop li a svg {
 	justify-content: center;
 	background: #C24868 0% 0% no-repeat padding-box;
 	border: 2px solid #F8F8F2;
+	border-radius: 25px;
 	opacity: 1;
 }
 
@@ -475,6 +477,7 @@ nav.desktop li a svg {
 	justify-content: center;
 	background: #C24868 0% 0% no-repeat padding-box;
 	border: 2px solid #F8F8F2;
+	border-radius: 25px;
 	opacity: 1;
 }
 
