@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Comic } from "./Comic"
 import { fetchComics } from "../hooks/useData"
+import styles from '../page.module.css'
 
 export function ComicsList() {
 	const [comics, setComics] = useState([]);
@@ -11,7 +12,7 @@ export function ComicsList() {
 	}, [])
 
 	return (
-		<div className='grid'>
+		<div className={styles.grid}>
 			{apiStatus === 'loading' && 
 				<h3>Loading comics!</h3>
 			}
