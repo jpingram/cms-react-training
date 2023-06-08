@@ -1,4 +1,5 @@
 import { ITEM_LIMIT } from "../hooks/useData"
+import styles from "../styles.module.css"
 
 type PagerProps = {
 	offset: number,
@@ -16,7 +17,7 @@ export function Pager({
 			nextPage,
 		}: PagerProps) {
 	return (
-		<div className='pager'>
+		<div className={styles.pager}>
 			<button disabled={(offset-ITEM_LIMIT < 0) ? true : false} onClick={() => prevPage()}>&lt;</button>
 			&nbsp;{offset+1}-{offset+numItems} of {totalItems}&nbsp;
 			<button disabled={(offset+ITEM_LIMIT >= totalItems) ? true : false} onClick={() => nextPage()}>&gt;</button>

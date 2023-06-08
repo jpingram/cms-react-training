@@ -2,10 +2,9 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-.fullApp {
-	display: grid;
-	grid-template-columns: 1fr 400px;
-	grid-gap: 1.5rem;
+body {
+	margin: 0;
+	background: #F8F8F2 0% 0% no-repeat padding-box;
 }
 
 ul {
@@ -16,72 +15,4 @@ ul {
 li {
 	padding: 0;
 	list-style-type: none;
-}
-
-.comicsList {
-	min-width: 350px;
-}
-
-.grid {
-	position: top;
-	display: grid;
-	align-items: top;
-	grid-template-columns: repeat(auto-fit, minmax(275px, auto));
-	grid-gap: 0.75rem;
-}
-
-.comic {
-	position: relative;
-	display: block;
-	margin: 20px;
-	width: 275px;
-}
-
-.comic .title {
-	margin-top: 0;
-}
-
-.buttonContainer {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	top: -25px;
-	left: -10px
-}
-
-.pager {
-	display: flex;
-	justify-content: center;
-}
-
-.favsList {
-	max-width: 400px;
-}
-
-.favButton {
-	background-color: black;
-	width: 50px;
-	height: 50px;
-	align-items: center;
-	justify-content: center;
-	border-radius: 25px;
-	border-color: white;
-	border-width: 2px;
-}
-
-.favButton.active {
-	background-color: maroon;
-	width: 50px;
-	height: 50px;
-	align-items: center;
-	justify-content: center;
-	border-radius: 25px;
-	border-color: white;
-	border-width: 2px;
-}
-
-.bolt {
-	margin-top: 5px;
-	margin-left: 0px;
-	width: 20px;
 }

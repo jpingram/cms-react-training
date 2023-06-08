@@ -1,5 +1,8 @@
+import { useContext } from 'react'
+import { MobileContext } from '../hooks/useIsMobile'
 import { ComicCard } from "./ComicCard"
 import { Status, Comic } from "../hooks/useData"
+import styles from '../styles.module.css'
 
 type ComicsListProps = {
 	comics: Comic[],
@@ -7,15 +10,17 @@ type ComicsListProps = {
 }
 
 export function ComicsList({ comics, apiStatus }: ComicsListProps) {
+	const { isMobile } = useContext(MobileContext);
+
 	return (
-		<div className='comicsList'>
-			<div className='grid'>
+		<div className={styles.comicsList}>
+			<div className={isMobile ? styles.gridMobile : styles.grid}>
 				{apiStatus === 'loading' && 
 					<h3>Loading comics!</h3>
 				}
 				{apiStatus === 'success' && (comics
 				.map((comic) => (
-					<ComicCard key={comic.id} comic={comic} />
+					<ComicCard key={comic.id} comic={comic}/>
 				)))}
 				{apiStatus === 'error' &&
 					<div>
@@ -25,6 +30,5 @@ export function ComicsList({ comics, apiStatus }: ComicsListProps) {
 				}
 			</div>
 		</div>
-		
 	)
 }

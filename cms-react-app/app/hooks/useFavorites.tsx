@@ -1,4 +1,4 @@
-import { useEffect, useReducer, createContext, ReactNode } from "react";
+import { useEffect, useReducer, createContext, ReactNode } from "react"
 import { Comic } from "./useData"
 
 //set up constants

@@ -543,6 +543,12 @@ export function staticData() {
 	]
 }
 
+export const defaultBlurb = {
+	tag: "New Comics!",
+	title: "Coming Out Daily",
+	description: "Sed posuere consectetur est at lobortis. Nulla vitae elit libero, a pharetra augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+}
+
 const TIMESTAMP = Date.now();
 export const ITEM_LIMIT = 15;
 
@@ -556,8 +562,8 @@ const marvelObj = {
 		"dateRange=1900-01-01%2C2024-01-01",
 		"noVariants=true",
 		`limit=${ITEM_LIMIT}`,
-		"apikey=" + "d1bcb79a6ab735b5aeff74c1c1c1a82a",
-		"hash=" + md5(TIMESTAMP + "60906353c898fea2c65fc49c76eb4f80bdfc437b" + "d1bcb79a6ab735b5aeff74c1c1c1a82a")
+		`apikey=${process.env.NEXT_PUBLIC_MARVEL_API_KEY}`,
+		"hash=" + md5(TIMESTAMP + process.env.NEXT_PUBLIC_MARVEL_API_PRIVATE_KEY + process.env.NEXT_PUBLIC_MARVEL_API_KEY)
 	]
 }
 

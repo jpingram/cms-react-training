@@ -1,14 +1,15 @@
 import { useContext } from 'react'
 import { FavsContext } from '../hooks/useFavorites'
 import { FavoriteCard } from './FavoriteCard'
+import styles from '../styles.module.css'
 
 export const FavoritesList = () => {
 	const context = useContext(FavsContext);
 	const { favorites, removeFromFavorites } = context;
 
 	return (
-		<div className='favsList'>
-			<h3>Favorites</h3>
+		<div className={styles.favsList}>
+			<p className={styles.favsTitle}><strong>Favorites</strong></p>
 			{favorites &&
 			favorites
 			.map((comic) => {
